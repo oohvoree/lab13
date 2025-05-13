@@ -1,0 +1,62 @@
+import tkinter as tk
+import math
+
+def calculate_triangle():
+    try:
+        a = float(entry_a.get())
+        b = float(entry_b.get())
+        c = float(entry_c.get())
+
+        if a <= 0 or b <= 0 or c <= 0 or a + b <= c or a + c <= b or b + c <= a:
+            result_label.config(text="Введіть коректні довжини сторін трикутника.")
+            return
+
+        # Обчислення медіани mc
+        mc = 0.5 * math.sqrt(2 * a**2 + 2 * b**2 - c**2)
+
+        # Обчислення висоти ha
+        s = (a + b + c) / 2
+        area = math.sqrt(s * (s - a) * (s - b) * (s - c))
+        ha = (2 * area) / a
+
+        result_label.config(text=f"Медіана mc: {mc:.2f}\nВисота ha: {ha:.2f}")
+
+    except ValueError:
+        result_label.config(text="Будь ласка, введіть числові значення для сторін.")
+
+# Створення головного вікна
+root = tk.Tk()
+root.title("Проект «Трикутник»")
+root.geometry("300x250")
+
+root.configure(bg="lavender")
+
+label_image=tk.Label()
+photo=tk.PhotoImage(file="22.gif")
+label_image.configure(image=photo)
+label_image.place(x=20, y=20)
+
+label_a = tk.Label(root, text="Сторона a:")
+label_a.place(x=20, y=60)
+entry_a = tk.Entry(root)
+entry_a.place(x=120, y=60)
+
+label_b = tk.Label(root, text="Сторона b:")
+label_b.place(x=20, y=90)
+entry_b = tk.Entry(root)
+entry_b.place(x=120, y=90)
+
+label_c = tk.Label(root, text="Сторона c:")
+label_c.place(x=20, y=120)
+entry_c = tk.Entry(root)
+entry_c.place(x=120, y=120)
+
+# Кнопка для обчислення
+calculate_button = tk.Button(root, text="Обчислити", command=calculate_triangle)
+calculate_button.place(x=100, y=160)
+
+# Мітка для виведення результату
+result_label = tk.Label(root, text="")
+result_label.place(x=20, y=190)
+
+root.mainloop()
